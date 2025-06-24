@@ -21,7 +21,6 @@ config/secrets.json
 config/production.json
 
 # Database dumps with sensitive data
-*.sql
 !weather_app_backup.sql
 !schema.sql
 database-backup-*.sql
