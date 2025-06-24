@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Weather App{% endblock %}</title>
+    
+    <!-- Bootstrap 4.3.1 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+          crossorigin="anonymous">
+    
+    <!-- Font Awesome 5.15.4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+          crossorigin="anonymous">
+    
+    <!-- Perfect Custom CSS -->
+    <style>
+        /* FIXED: Sticky Footer Layout */
+        html, body {
+            height: 100%;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Main content should grow to fill available space */
+        main {
+            flex: 1;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+        }
+        
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .jumbotron {
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 2rem;
+        }
+        
+        /* Perfect Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        
+        .slide-down {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .weather-icon {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .card-header {
+            border-radius: 12px 12px 0 0 !important;
+            font-weight: 600;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .history-item {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+        
+        .history-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
+        }
+        
+        .btn-lg {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .form-control-lg {
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+        }
+        
+        .input-group-text {
+            border-radius: 10px 0 0 10px;
+            background-color: #e9ecef;
+            border-color: #ced4da;
+        }
+        
+        .text-primary {
+            color: #007bff !important;
+        }
+        
+        .bg-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        }
+        
+        .bg-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+        }
+        
+        .position-fixed {
+            position: fixed !important;
+        }
+        
+        .spinner-border {
+            width: 2rem;
+            height: 2rem;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Search Results Perfect Positioning */
+        #searchResults {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        #searchResults .card {
+            margin-bottom: 1rem;
+        }
+        
+        /* Button States */
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            color: white;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        
+        /* Perfect spacing */
+        .container {
+            max-width: 1140px;
+        }
+        
+        /* Loading states */
+        .fa-spin {
+            animation: fa-spin 1s infinite linear;
+        }
+        
+        @keyframes fa-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Weather card improvements */
+        .weather-details div {
+            margin-bottom: 0.5rem;
+        }
+        
+        .weather-details i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+        }
+        
+        /* History page improvements */
+        .history-item .card-header h5 {
+            color: #495057;
+        }
+        
+        .history-item .text-primary {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Toast-style alerts */
+        .alert-dismissible.position-fixed {
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* FIXED: Sticky Footer Styling */
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            margin-top: auto; /* This pushes footer to bottom */
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+        
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .jumbotron .display-4 {
+                font-size: 2rem;
+            }
+            
+            .btn-lg {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            
+            .history-item .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .history-item .card-header .btn {
+                margin-top: 0.5rem;
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cloud-sun"></i> Weather App
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link" href="/">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <a class="nav-link" href="/history">
+                        <i class="fas fa-history"></i> History
+                    </a>
+                    <a class="nav-link" href="/api-doc">
+                        <i class="fas fa-code"></i> API Docs
+                    </a>
+                    <a class="nav-link" href="/about">
+                        <i class="fas fa-info-circle"></i> About
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FIXED: Footer now properly sticks to bottom -->
+    <footer class="bg-dark text-light text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-2">
+                        <i class="fas fa-code"></i> Weather App - Built with Node.js, Express & MySQL
+                    </p>
+                    <p class="mb-0">
+                        <small class="text-muted">
+                            <i class="fas fa-cloud"></i> Weather data provided by OpenWeatherMap API |
+                            <i class="fas fa-map-marked-alt"></i> Geocoding by MapBox
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- jQuery 3.7.1 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap 4.3.1 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    
+    <!-- Custom Scripts -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

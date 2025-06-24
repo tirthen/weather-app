@@ -1,0 +1,322 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-gradient text-white text-center">
+                <h1 class="display-4">
+                    <i class="fas fa-info-circle"></i> About Weather App
+                </h1>
+                <p class="lead">Technical Test Project - Full Stack Weather Application</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-project-diagram"></i> Project Overview
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        This weather application demonstrates full-stack development skills using modern web technologies
+                        and best practices for a technical assessment.
+                    </p>
+                    <p>
+                        The application allows users to search for weather information by entering any address.
+                        It uses real-time APIs to convert addresses to coordinates and fetch current weather data
+                        with hourly forecasts, while maintaining a complete search history in a MySQL database.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Stack -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-server"></i> Backend Technologies
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fab fa-node-js text-success"></i>
+                            <strong>NodeJS</strong> - Server runtime environment
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-route text-primary"></i>
+                            <strong>ExpressJS</strong> - Web application framework
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-code text-warning"></i>
+                            <strong>Nunjucks</strong> - Template engine
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-database text-info"></i>
+                            <strong>MySQL</strong> - Database with connection pooling
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-shield-alt text-danger"></i>
+                            <strong>Security</strong> - Environment variables, input validation
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-desktop"></i> Frontend Technologies
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fab fa-js-square text-warning"></i>
+                            <strong>jQuery (Latest)</strong> - DOM manipulation and AJAX
+                        </li>
+                        <li class="mb-2">
+                            <i class="fab fa-bootstrap text-primary"></i>
+                            <strong>Bootstrap 4.3.1</strong> - Responsive CSS framework
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-paint-brush text-success"></i>
+                            <strong>Custom CSS</strong> - Modern design with animations
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-mobile-alt text-info"></i>
+                            <strong>Responsive Design</strong> - Mobile-first approach
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-magic text-danger"></i>
+                            <strong>Dynamic Content</strong> - Real-time DOM updates
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Integration -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-cloud"></i> Weather API
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <h5>OpenWeatherMap</h5>
+                    <p>Provides comprehensive weather data including:</p>
+                    <ul>
+                        <li>Current weather conditions</li>
+                        <li>24-hour hourly forecasts</li>
+                        <li>Temperature, humidity, wind speed</li>
+                        <li>Weather descriptions and icons</li>
+                    </ul>
+                    <a href="https://openweathermap.org/" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-external-link-alt"></i> Visit OpenWeatherMap
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-map-marked-alt"></i> Geocoding API
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <h5>MapBox Geocoding</h5>
+                    <p>Converts addresses to coordinates with:</p>
+                    <ul>
+                        <li>Global address coverage</li>
+                        <li>Precise latitude/longitude coordinates</li>
+                        <li>Formatted address standardization</li>
+                        <li>Intelligent address parsing</li>
+                    </ul>
+                    <a href="https://www.mapbox.com/" target="_blank" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-external-link-alt"></i> Visit MapBox
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-star"></i> Key Features
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">Core Functionality</h5>
+                            <ul>
+                                <li>Address-based weather search</li>
+                                <li>Real-time weather data retrieval</li>
+                                <li>24-hour forecast display</li>
+                                <li>Search history management</li>
+                                <li>Dynamic content generation</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">Technical Features</h5>
+                            <ul>
+                                <li>RESTful API architecture</li>
+                                <li>Database connection pooling</li>
+                                <li>Error handling and validation</li>
+                                <li>Responsive mobile design</li>
+                                <li>Modern JavaScript (ES6+)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requirements Compliance -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-check-circle"></i> Requirements Compliance
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Technical Requirements</h5>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                <strong>Requirement 1:</strong> Address input + OpenWeatherMap API
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                <strong>Requirement 2:</strong> Save to database button
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                <strong>Requirement 3:</strong> Historical data retrieval
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                <strong>Requirement 4:</strong> Dynamic HTML generation
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                <strong>Requirement 5:</strong> GitHub repository
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Framework Requirements</h5>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                NodeJS + ExpressJS
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                Nunjucks template engine
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                Bootstrap 4.3.1
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                jQuery (latest)
+                            </div>
+                            <div class="requirement-item">
+                                <i class="fas fa-check text-success"></i>
+                                MySQL database
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Development Info -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-code"></i> Development Information
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="text-primary">Project Structure</h6>
+                            <ul class="small">
+                                <li>MVC architecture pattern</li>
+                                <li>Modular route organization</li>
+                                <li>Separation of concerns</li>
+                                <li>RESTful API design</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-success">Security Measures</h6>
+                            <ul class="small">
+                                <li>API keys in database</li>
+                                <li>Environment variables</li>
+                                <li>Input validation</li>
+                                <li>SQL injection prevention</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="text-warning">Performance</h6>
+                            <ul class="small">
+                                <li>Database connection pooling</li>
+                                <li>Geocoding result caching</li>
+                                <li>Optimized database queries</li>
+                                <li>Efficient DOM manipulation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.requirement-item {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.requirement-item i {
+    margin-right: 0.5rem;
+    width: 1rem;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,646 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="jumbotron bg-gradient text-white text-center">
+                <h1 class="display-4">
+                    <i class="fas fa-code"></i> API Documentation
+                </h1>
+                <p class="lead">Complete guide to Weather App REST API endpoints</p>
+                <div class="mt-3">
+                    <span class="badge badge-light mr-2">
+                        <i class="fas fa-server"></i> REST API
+                    </span>
+                    <span class="badge badge-light mr-2">
+                        <i class="fas fa-database"></i> JSON Responses  
+                    </span>
+                    <span class="badge badge-light">
+                        <i class="fas fa-shield-alt"></i> Rate Limited
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Navigation -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-compass"></i> Quick Navigation</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Core Endpoints</h6>
+                            <ul class="list-unstyled">
+                                <li><a href="#geocode"><i class="fas fa-map-marker-alt text-success"></i> Geocode Address</a></li>
+                                <li><a href="#weather"><i class="fas fa-cloud-sun text-warning"></i> Get Weather</a></li>
+                                <li><a href="#store"><i class="fas fa-save text-info"></i> Store Search</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-primary">Management Endpoints</h6>
+                            <ul class="list-unstyled">
+                                <li><a href="#history"><i class="fas fa-history text-secondary"></i> Search History</a></li>
+                                <li><a href="#delete"><i class="fas fa-trash text-danger"></i> Delete History</a></li>
+                                <li><a href="#health"><i class="fas fa-heartbeat text-success"></i> Health Check</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Base URL Info -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle"></i> Base URL</h5>
+                <code>http://localhost:3000/api</code>
+                <p class="mb-0 mt-2">All API endpoints are prefixed with <code>/api</code></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geocode Endpoint -->
+    <div class="row mb-4" id="geocode">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-map-marker-alt"></i> Geocode Address
+                        <span class="badge badge-light text-dark ml-2">POST</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Convert a text address into latitude and longitude coordinates using MapBox API. Returns multiple matching locations for better user experience.</p>
+                    
+                    <div class="alert alert-info mb-3">
+                        <h6><i class="fas fa-lightbulb"></i> Multiple Results Feature</h6>
+                        <p class="mb-0">When you search for "Paris", you'll get both Paris, France and Paris, Texas. Users can then choose their intended location for more accurate weather data.</p>
+                    </div>
+                    
+                    <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <code>POST /api/geocode</code>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-upload"></i> Request Body</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>address</code></td>
+                                    <td>string</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>The address to geocode (minimum 3 characters)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>{
+  "results": [
+    {
+      "latitude": 48.8566,
+      "longitude": 2.3522,
+      "formatted_address": "Paris, France",
+      "place_type": ["place"],
+      "relevance": 1.0
+    },
+    {
+      "latitude": 33.6617,
+      "longitude": -95.5555,
+      "formatted_address": "Paris, Texas, United States",
+      "place_type": ["place"],
+      "relevance": 0.8
+    }
+  ],
+  "count": 2,
+  "source": "api"
+}</code></pre>
+
+                    <h6 class="text-primary"><i class="fas fa-info-circle"></i> Response Fields</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-sm table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Field</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>results</code></td>
+                                    <td>array</td>
+                                    <td>Array of location results (up to 10)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>count</code></td>
+                                    <td>number</td>
+                                    <td>Number of results returned</td>
+                                </tr>
+                                <tr>
+                                    <td><code>source</code></td>
+                                    <td>string</td>
+                                    <td>"api" or "cache" - data source</td>
+                                </tr>
+                                <tr>
+                                    <td><code>relevance</code></td>
+                                    <td>number</td>
+                                    <td>Match relevance (0.0 to 1.0)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-code"></i> Example Request</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>curl -X POST http://localhost:3000/api/geocode \
+  -H "Content-Type: application/json" \
+  -d '{"address": "Paris"}'</code></pre>
+
+                    <div class="alert alert-success mt-3 mb-0">
+                        <h6><i class="fas fa-magic"></i> Frontend Integration</h6>
+                        <p class="mb-0">The frontend automatically handles multiple results by showing a selection interface when more than one location is found, making it easy for users to choose their intended location.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weather Endpoint -->
+    <div class="row mb-4" id="weather">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">
+                        <i class="fas fa-cloud-sun"></i> Get Weather Data
+                        <span class="badge badge-dark ml-2">POST</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Fetch current weather and hourly forecast for given coordinates using OpenWeatherMap API.</p>
+                    
+                    <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <code>POST /api/weather</code>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-upload"></i> Request Body</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>latitude</code></td>
+                                    <td>number</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>Latitude coordinate (-90 to 90)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>longitude</code></td>
+                                    <td>number</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>Longitude coordinate (-180 to 180)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>address</code></td>
+                                    <td>string</td>
+                                    <td><span class="badge badge-warning">Optional</span></td>
+                                    <td>Address for reference</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>{
+  "current": {
+    "coord": {"lon": -74.0060, "lat": 40.7128},
+    "weather": [{"main": "Clear", "description": "clear sky", "icon": "01d"}],
+    "main": {"temp": 22.5, "humidity": 65, "pressure": 1013},
+    "wind": {"speed": 3.2, "deg": 180},
+    "visibility": 10000
+  },
+  "hourly": [...],
+  "daily": [...],
+  "address": "New York, NY",
+  "timestamp": "2024-12-26T10:30:00.000Z"
+}</code></pre>
+
+                    <h6 class="text-primary"><i class="fas fa-code"></i> Example Request</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>curl -X POST http://localhost:3000/api/weather \
+  -H "Content-Type: application/json" \
+  -d '{"latitude": 40.7128, "longitude": -74.0060, "address": "New York, NY"}'</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Search Endpoint -->
+    <div class="row mb-4" id="store">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-save"></i> Store Search
+                        <span class="badge badge-light text-dark ml-2">POST</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Save a weather search to the database for historical tracking.</p>
+                    
+                    <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <code>POST /api/store-search</code>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-upload"></i> Request Body</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>address</code></td>
+                                    <td>string</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>The searched address</td>
+                                </tr>
+                                <tr>
+                                    <td><code>latitude</code></td>
+                                    <td>number</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>Latitude coordinate</td>
+                                </tr>
+                                <tr>
+                                    <td><code>longitude</code></td>
+                                    <td>number</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>Longitude coordinate</td>
+                                </tr>
+                                <tr>
+                                    <td><code>current_weather</code></td>
+                                    <td>object</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>Current weather data from API</td>
+                                </tr>
+                                <tr>
+                                    <td><code>hourly_forecast</code></td>
+                                    <td>array</td>
+                                    <td><span class="badge badge-warning">Optional</span></td>
+                                    <td>Hourly forecast data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>{
+  "success": true,
+  "message": "Weather search stored successfully",
+  "id": 42
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Endpoints -->
+    <div class="row mb-4" id="history">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-history"></i> Search History
+                        <span class="badge badge-light text-dark ml-2">GET</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Retrieve paginated list of all weather searches from the database.</p>
+                    
+                    <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <code>GET /api/history</code>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-filter"></i> Query Parameters</h6>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>page</code></td>
+                                    <td>number</td>
+                                    <td>1</td>
+                                    <td>Page number for pagination</td>
+                                </tr>
+                                <tr>
+                                    <td><code>limit</code></td>
+                                    <td>number</td>
+                                    <td>10</td>
+                                    <td>Number of results per page (max 100)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>{
+  "data": [
+    {
+      "id": 1,
+      "address": "New York, NY",
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "current_weather": {...},
+      "search_timestamp": "12/26/2024, 10:30:00 AM"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 10,
+    "total": 25,
+    "pages": 3
+  }
+}</code></pre>
+
+                    <h6 class="text-primary"><i class="fas fa-code"></i> Example Request</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>curl -X GET "http://localhost:3000/api/history?page=1&limit=5"</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete History Endpoints -->
+    <div class="row mb-4" id="delete">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-trash"></i> Delete History
+                        <span class="badge badge-light text-dark ml-2">DELETE</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-danger">Delete Single Item</h5>
+                            <p>Delete a specific history entry by ID.</p>
+                            
+                            <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                            <div class="bg-light p-3 rounded mb-3">
+                                <code>DELETE /api/history/:id</code>
+                            </div>
+
+                            <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                            <pre class="bg-dark text-light p-2 rounded"><code>{
+  "success": true,
+  "message": "History entry deleted successfully"
+}</code></pre>
+
+                            <h6 class="text-primary"><i class="fas fa-code"></i> Example</h6>
+                            <pre class="bg-dark text-light p-2 rounded"><code>curl -X DELETE http://localhost:3000/api/history/1</code></pre>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-danger">Clear All History</h5>
+                            <p>Delete all history entries from the database.</p>
+                            
+                            <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                            <div class="bg-light p-3 rounded mb-3">
+                                <code>DELETE /api/history</code>
+                            </div>
+
+                            <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                            <pre class="bg-dark text-light p-2 rounded"><code>{
+  "success": true,
+  "message": "All history cleared successfully"
+}</code></pre>
+
+                            <h6 class="text-primary"><i class="fas fa-code"></i> Example</h6>
+                            <pre class="bg-dark text-light p-2 rounded"><code>curl -X DELETE http://localhost:3000/api/history</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Check Endpoint -->
+    <div class="row mb-4" id="health">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-heartbeat"></i> Health Check
+                        <span class="badge badge-light text-dark ml-2">GET</span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">Check the health status of the application and database connection.</p>
+                    
+                    <h6 class="text-primary"><i class="fas fa-link"></i> Endpoint</h6>
+                    <div class="bg-light p-3 rounded mb-3">
+                        <code>GET /api/health</code>
+                    </div>
+
+                    <h6 class="text-primary"><i class="fas fa-download"></i> Response</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>{
+  "status": "healthy",
+  "database": "connected", 
+  "timestamp": "2024-12-26T10:30:00.000Z"
+}</code></pre>
+
+                    <h6 class="text-primary"><i class="fas fa-code"></i> Example Request</h6>
+                    <pre class="bg-dark text-light p-3 rounded"><code>curl -X GET http://localhost:3000/api/health</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Responses -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Error Responses
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <p class="lead">All endpoints return consistent error responses with appropriate HTTP status codes.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-danger">Common Error Codes</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>400</code></td>
+                                            <td>Bad Request - Invalid parameters</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>404</code></td>
+                                            <td>Not Found - Resource not found</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>429</code></td>
+                                            <td>Too Many Requests - Rate limit exceeded</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>500</code></td>
+                                            <td>Internal Server Error</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-danger">Error Response Format</h6>
+                            <pre class="bg-dark text-light p-3 rounded"><code>{
+  "error": "Address is required",
+  "code": 400,
+  "timestamp": "2024-12-26T10:30:00.000Z"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rate Limiting Info -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-clock"></i> Rate Limiting</h5>
+                <p class="mb-0">
+                    API endpoints are rate limited to <strong>100 requests per 15 minutes</strong> per IP address. 
+                    Rate limit headers are included in responses: <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code>, <code>X-RateLimit-Reset</code>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h5>Need Help?</h5>
+                    <p class="mb-0">
+                        For support or questions about the API, please check the 
+                        <a href="/about" class="btn btn-outline-primary btn-sm ml-1">
+                            <i class="fas fa-info-circle"></i> About Page
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Custom styles for API documentation */
+.jumbotron.bg-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+code {
+    color: #e83e8c;
+    font-size: 87.5%;
+}
+
+pre code {
+    color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.table th {
+    border-top: none;
+    font-weight: 600;
+}
+
+.badge {
+    font-size: 0.8em;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Highlight target sections */
+:target {
+    animation: highlight 2s ease;
+}
+
+@keyframes highlight {
+    0% { background-color: rgba(255, 235, 59, 0.3); }
+    100% { background-color: transparent; }
+}
+
+/* Responsive code blocks */
+@media (max-width: 768px) {
+    pre {
+        font-size: 0.8rem;
+        padding: 1rem !important;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
+</style>
+{% endblock %}
