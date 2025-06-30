@@ -96,7 +96,6 @@ dist
 
 # Gatsby files
 .cache/
-public
 
 # Storybook build outputs
 .out
@@ -185,8 +184,6 @@ dist/
 out/
 
 # Static files (if generated)
-public/css/compiled/
-public/js/compiled/
 
 # Monitoring and analytics
 .monitoring/
